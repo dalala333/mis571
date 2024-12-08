@@ -3,12 +3,14 @@ package com.example.tutorial5duyenle.constant;
  * Constants related to database file
  * Such as file path and file name
  */
-public abstract class DBConstant
-{
-    //database file directory
-    public static String DATABASE_PATH = "/data/data/com.example.tutorial5duyenle/databases";
-    //database file name
-    public static String DATABASE_FILE = "library.db";
-    //database version
-    public static int DATABASE_VERSION = 1;
+import android.content.Context;
+
+public abstract class DBConstant {
+    public static final String DATABASE_FILE = "library.db";
+    public static final int DATABASE_VERSION = 1;
+
+    // Add this method to dynamically fetch the database path
+    public static String getDatabasePath(Context context) {
+        return context.getDatabasePath(DATABASE_FILE).getAbsolutePath();
+    }
 }

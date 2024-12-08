@@ -1,11 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Tutorial 5 DuyenLe</string>
+    <string name="app_name">Tutorial 6 Duyen Le</string>
     <string name="action_settings">Settings</string>
-    <string name="welcome">Welcome to Tutorial 5</string>
-    <string name="goCheckOut_btn">Check Out</string>
-    <string name="goDoQuery_btn">Do Query</string>
+    <string name="welcome">Welcome to Tutorial 6</string>
     <string name="title_query">Query</string>
     <string name="goback">Back to Main Page</string>
     <string name="showresult">Show Result</string>
     <string name="query_prompt">Choose a query</string>
+    <string name="doQuery_btn">Do Query</string>
+    <string name="goCheckOut_btn">Check Out</string>
+    <string name="checkout_title"><![CDATA[Checkout & Return]]></string>
+    <string name="StudentID">Student ID</string>
+    <string name="studentID_text">Student ID</string>
+    <string name="title_checkout"><![CDATA[Check Out & Return]]></string>
+    <string name="BookID">Book ID</string>
+    <string name="BookID_text">Book ID</string>
+    <string name="date">Date</string>
+    <string name="checkout">Check Out</string>
+    <string name="bookreturn">Return</string>
+    <string name="summary">Summary</string>
+    <string name="BTMP">Back to Main Page</string>
 </resources>

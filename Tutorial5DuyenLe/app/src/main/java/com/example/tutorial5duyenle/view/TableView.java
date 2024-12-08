@@ -1,88 +1,4 @@
-//package com.example.tutorial5duyenle.view;
-//import com.example.tutorial5duyenle.util.DBOperator;
-//import android.content.Context;
-//import android.database.Cursor;
-//import android.view.View;
-//import android.widget.TableLayout;
-//import android.widget.TableRow;
-//import android.widget.TextView;
-///**
-// * This class is used to show data in database
-// * It is an extension of TableLayout
-// */
-//public class TableView extends TableLayout
-//{
-//    public TableView(Context context, String tableName)
-//    {
-//        super(context);
-//        String sql = "select * from " + tableName + ";";
-//        DBOperator op = DBOperator.getInstance();
-//        Cursor cursor = op.execQuery(sql, null);
-//        this.extractData(context, cursor);
-//    }
-//    public TableView(Context context, Cursor cursor)
-//    {
-//        super(context);
-//        this.extractData(context, cursor);
-//    }
-//    /*
-//     * fill data in table view with a cursor
-//     */
-//    private void extractData(Context context,Cursor cursor)
-//    {
-//        TextView textView;
-//        TableRow row;
-//        boolean first = true;
-//        while (cursor.moveToNext())
-//        {
-//            /*
-//             * Before displaying the first row,
-//             * display column names as a header
-//             */
-//            if (first){
-//                textView = new TextView(context);
-//                String[] columnNames = cursor.getColumnNames();
-//                StringBuilder strBuilder = new StringBuilder();
-//                for (int i=0;i<columnNames.length;i++){
-//                    if (i>0) strBuilder.append("|");
-//                    strBuilder.append(columnNames[i]);
-//                }
-//                textView.setText(strBuilder);
-//                this.addView(textView);
-////show separation line
-//                View line = new View(context);
-//                line.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,2));
-//                line.setBackgroundColor(0xFF909090);
-//                this.addView(line);
-//                first = false;
-//            }
-////show values in a row
-//            row = new TableRow(context);
-//            int length = cursor.getColumnCount();
-//            for (int i=0;i<length;i++)
-//            {
-//                if (i>0){
-//                    textView = new TextView(context);
-//                    textView.setText("|");
-//                    row.addView(textView);
-//                }
-//                textView = new TextView(context);
-//                textView.setText(cursor.getString(i));
-//                row.addView(textView);
-//            }
-//            this.addView(row);
-//        }
-//        /*
-//         * Do not forget to close the cursor!
-//         * Otherwise database exceptions will be thrown
-//         */
-//        cursor.close();
-//    }
-//}
-
 package com.example.tutorial5duyenle.view;
-
-import com.example.tutorial5duyenle.util.DBOperator;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -91,64 +7,67 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.tutorial5duyenle.util.DBOperator;
+
 /**
- * This class is used to show data in database
- * It is an extension of TableLayout
+ * This class is used to show data in the database.
+ * It is an extension of TableLayout.
  */
 public class TableView extends TableLayout {
+
     public TableView(Context context, String tableName) {
         super(context);
-        String sql = "select * from " + tableName + ";";
-        DBOperator op = DBOperator.getInstance();
-        Cursor cursor = op.execQuery(sql); // Corrected method call
-        this.extractData(context, cursor);
+        String sql = "SELECT * FROM " + tableName + ";";
+        Cursor cursor = DBOperator.execQuery(context, sql);
+        if (cursor != null) {
+            this.extractData(context, cursor);
+        } else {
+            this.displayNoDataMessage(context);
+        }
     }
 
     public TableView(Context context, Cursor cursor) {
         super(context);
-        this.extractData(context, cursor);
+        if (cursor != null) {
+            this.extractData(context, cursor);
+        } else {
+            this.displayNoDataMessage(context);
+        }
     }
 
-    /*
-     * Fill data in table view with a cursor
+    /**
+     * Fill data in the TableView using a Cursor.
      */
     private void extractData(Context context, Cursor cursor) {
         TextView textView;
         TableRow row;
         boolean first = true;
-        while (cursor.moveToNext()) {
-            /*
-             * Before displaying the first row,
-             * display column names as a header
-             */
-            if (first) {
-                textView = new TextView(context);
-                String[] columnNames = cursor.getColumnNames();
-                StringBuilder strBuilder = new StringBuilder();
-                for (int i = 0; i < columnNames.length; i++) {
-                    if (i > 0) strBuilder.append("|");
-                    strBuilder.append(columnNames[i]);
-                }
-                textView.setText(strBuilder);
-                this.addView(textView);
 
-                // Show separation line
+        while (cursor.moveToNext()) {
+            // Display column names as a header for the first row
+            if (first) {
+                row = new TableRow(context);
+                String[] columnNames = cursor.getColumnNames();
+                for (String columnName : columnNames) {
+                    textView = new TextView(context);
+                    textView.setText(columnName);
+                    row.addView(textView);
+                }
+                this.addView(row);
+
+                // Add a separator line
                 View line = new View(context);
-                line.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, 2));
+                line.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 2));
                 line.setBackgroundColor(0xFF909090);
                 this.addView(line);
+
                 first = false;
             }
 
-            // Show values in a row
+            // Display values in a row
             row = new TableRow(context);
             int length = cursor.getColumnCount();
             for (int i = 0; i < length; i++) {
-                if (i > 0) {
-                    textView = new TextView(context);
-                    textView.setText("|");
-                    row.addView(textView);
-                }
                 textView = new TextView(context);
                 textView.setText(cursor.getString(i));
                 row.addView(textView);
@@ -156,10 +75,18 @@ public class TableView extends TableLayout {
             this.addView(row);
         }
 
-        /*
-         * Do not forget to close the cursor!
-         * Otherwise, database exceptions will be thrown
-         */
+        // Close the cursor to avoid database exceptions
         cursor.close();
+    }
+
+    /**
+     * Display a message when no data is available.
+     */
+    private void displayNoDataMessage(Context context) {
+        TableRow row = new TableRow(context);
+        TextView textView = new TextView(context);
+        textView.setText("No data available.");
+        row.addView(textView);
+        this.addView(row);
     }
 }
