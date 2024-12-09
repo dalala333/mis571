@@ -1,10 +1,11 @@
 package com.example.tutorial5duyenle.constant;
+
 public abstract class SQLCommand {
-    //query all students
+    // query all students
     public static String QUERY_STUDENT;
-    //list all data in books table
+    // list all data in books table
     public static String QUERY_1;
-    //List the call numbers of books with the title
+    // List the call numbers of books with the title
     public static String QUERY_2;
     public static String QUERY_3;
     public static String QUERY_4;
@@ -31,4 +32,7 @@ public abstract class SQLCommand {
             "coduedate TEXT NOT NULL," +
             "coreturned TEXT NOT NULL" +
             ");";
+
+    // checkout summary
+    public static String CHECKOUT_SUMMARY = "select strftime('%m',coDueDate) as month, count(*) as total from checkout where strftime('%Y',coDueDate)='2017' group by month order by total desc";
 }
