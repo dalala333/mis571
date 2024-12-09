@@ -33,6 +33,12 @@ public abstract class SQLCommand {
             "coreturned TEXT NOT NULL" +
             ");";
 
-    // checkout summary
-    public static String CHECKOUT_SUMMARY = "select strftime('%m',coDueDate) as month, count(*) as total from checkout where strftime('%Y',coDueDate)='2017' group by month order by total desc";
+    // Checkout summary query
+// Checkout summary for 2019
+    public static String CHECKOUT_SUMMARY = "SELECT strftime('%m', coduedate) AS month, COUNT(*) AS total " +
+            "FROM CheckOut " +
+            "WHERE strftime('%Y', coduedate) = '2014' " +
+            "GROUP BY month " +
+            "ORDER BY month;";
+
 }
