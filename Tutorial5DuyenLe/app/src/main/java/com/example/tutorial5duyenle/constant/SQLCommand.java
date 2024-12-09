@@ -1,16 +1,22 @@
 package com.example.tutorial5duyenle.constant;
+
 public abstract class SQLCommand {
-    //query all students
+    // Query all students
     public static String QUERY_STUDENT;
-    //list all data in books table
+
+    // List all data in books table
     public static String QUERY_1;
-    //List the call numbers of books with the title
+
+    // List the call numbers of books with the title
     public static String QUERY_2;
     public static String QUERY_3;
     public static String QUERY_4;
     public static String QUERY_5;
     public static String QUERY_6;
     public static String QUERY_7;
+
+    // Query for the checkout list
+    public static String CHECKOUT_LIST;
 
     static {
         QUERY_STUDENT = "select stid, stname from Student";
@@ -21,6 +27,19 @@ public abstract class SQLCommand {
         QUERY_5 = "select lbcallnum from CheckOut where stid = '777'";
         QUERY_6 = "select stid, count(lbcallnum) as booksCheckedOut from CheckOut group by stid";
         QUERY_7 = "select lbcallnum from CheckOut where cofine > 0";
+
+        // Initialize CHECKOUT_LIST query
+        CHECKOUT_LIST = "select CheckOut.stid as _id, CheckOut.stid as s_id, " +
+                "LibBook.lbTitle as lbtitle, " +
+                "CheckOut.coDueDate as coduedate, " +
+                "CheckOut.coreturned as coreturned, " +
+                "CheckOut.coFine as cofine, " +
+                "Student.stname as stname " +
+                "from CheckOut " +
+                "join Student on Student.stid = CheckOut.stid " +
+                "join LibBook on LibBook.lbCallNum = CheckOut.lbCallNum";
+
+
     }
 
     public static String RETURN_BOOK = "update checkout set coreturned=? where stid=? and lbcallnum=?";

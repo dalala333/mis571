@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.tutorial5duyenle">
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
+        <!-- Main Activity -->
         <activity
             android:name=".DuyenLeActivity"
             android:label="@string/app_name"
@@ -20,7 +22,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".QueryActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".CheckoutActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <!-- Query Activity -->
+        <activity
+            android:name=".QueryActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="false">
+        </activity>
+
+        <!-- Checkout Activity -->
+        <activity
+            android:name=".CheckoutActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="false">
+        </activity>
+
+        <!-- ShowList Activity -->
+        <activity
+            android:name=".ShowlistActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="false">
+        </activity>
+
     </application>
 </manifest>
